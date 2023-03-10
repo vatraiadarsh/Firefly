@@ -1,9 +1,12 @@
 using Entities;
 using Entities.Models;
+using Entities.ResponseModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Net;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -62,7 +65,36 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseExceptionHandler(appError =>
+{
+    appError.Run(async context =>
+    {
+        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        context.Response.ContentType = "application/json";
+        var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+        if (contextFeature != null)
+        {
+            // await context.Response.WriteAsync(new ErrorDetails()
+            // {
+            //     StatusCode = context.Response.StatusCode,
+            //     Message = "Internal Server Error."
+            // }.ToString()); 
+
+            // if environment is development
+            await context.Response.WriteAsync(new ResponseDetails()
+            {
+                StatusCode = context.Response.StatusCode,
+                Message = contextFeature.Error.Message
+            }.ToString());
+
+        }
+
+    });
+
+});
 
 app.MapControllers();
 
