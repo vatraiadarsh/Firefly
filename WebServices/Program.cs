@@ -35,32 +35,12 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredUniqueChars = 3;
 });
 
-
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;
 });
-
-
-builder.Services.AddControllers();
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("CorsPolicy",
-        builder => builder.AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader());
-});
-
-builder.Services.AddScoped<IValidator<CategoryDto>, CategoryValidator>();
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-app.UseCors("CorsPolicy");
-
 
 builder.Services.AddAuthentication(options =>
 {
@@ -81,6 +61,25 @@ builder.Services.AddAuthentication(options =>
     };
 
 });
+
+builder.Services.AddControllers();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+        builder => builder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader());
+});
+
+builder.Services.AddScoped<IValidator<CategoryDto>, CategoryValidator>();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+app.UseCors("CorsPolicy");
+
+
 
 if (app.Environment.IsDevelopment())
 {
@@ -118,7 +117,6 @@ app.UseExceptionHandler(appError =>
         }
 
     });
-
 });
 
 app.MapControllers();
