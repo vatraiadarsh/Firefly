@@ -2,7 +2,7 @@
 
 namespace WebServices.Controllers
 {
-    public class test : Controller
+    public class AuthenticationController : Controller
     {
         public IActionResult Index()
         {
