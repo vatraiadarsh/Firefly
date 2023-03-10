@@ -1,5 +1,7 @@
 ﻿using Entities.DataTransferObjects;
 using Entities.Models;
+using Entities.RequestFeatures;
+using Entities.RequestFeatures.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,7 @@ namespace Contracts
 {
     public interface ICategoryRepository : IRepositoryBase<Category>
     {
-        Task<IEnumerable<Category>> GetAllCategoriesAsync(bool trackChanges);
+        Task<PagedList<Category>> GetAllCategoriesAsync(CategoryParameters categoryParameters, bool trackChanges);
         Task<Category> GetCategoryByIdAsync(Guid categoryId, bool trackChanges);
         void CreateCategory(Category category);
         void UpdateCategory(Category category);
