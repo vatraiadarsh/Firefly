@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Entities.DataTransferObjects
 {
-    internal class Class1
+    public class LoginDto
     {
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -1,11 +1,17 @@
+using Contracts;
 using Entities;
+using Entities.DataTransferObjects;
 using Entities.Models;
 using Entities.ResponseModel;
+using FluentValidation;
+using Entities.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Repository;
 using System.Net;
 using System.Text;
 
@@ -19,6 +25,23 @@ builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<RepositoryContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequiredUniqueChars = 3;
+});
+
+
+builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 
 builder.Services.AddControllers();
@@ -29,6 +52,8 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod()
         .AllowAnyHeader());
 });
+
+builder.Services.AddScoped<IValidator<CategoryDto>, CategoryValidator>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
