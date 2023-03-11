@@ -46,6 +46,7 @@ namespace WebServices.Controllers
                 Name = category.Name,
                 Description = category.Description,
                 Image = category.Image,
+                CreatedAt = category.CreatedAt
             };
             return Ok(categoryDto);
         }

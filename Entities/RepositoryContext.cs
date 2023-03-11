@@ -14,10 +14,11 @@ namespace Entities
         public RepositoryContext(DbContextOptions options) : base(options)
         {
         }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
         }
+
+        public DbSet<Category>? Categories { get; set; }
     }
 }
