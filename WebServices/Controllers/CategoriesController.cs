@@ -29,8 +29,8 @@ namespace WebServices.Controllers
             {
                 Id = c.Id,
                 Name = c.Name,
-                Description = c.Description,
-                Image = c.Image,
+                Notes = c.Notes,
+                Attachments = c.Attachments,
             }).ToList();
             return Ok(categoryDto);
         }
@@ -44,8 +44,8 @@ namespace WebServices.Controllers
             {
                 Id = category.Id,
                 Name = category.Name,
-                Description = category.Description,
-                Image = category.Image,
+                Notes = category.Notes,
+                Attachments = category.Attachments,
                 CreatedAt = category.CreatedAt
             };
             return Ok(categoryDto);
@@ -60,8 +60,8 @@ namespace WebServices.Controllers
             var categoryEntity = new Category
             {
                 Name = category.Name,
-                Description = category.Description,
-                Image = category.Image
+                Notes = category.Notes,
+                Attachments = category.Attachments
             };
             _repository.Category.CreateCategory(categoryEntity);
             await _repository.SaveAsync();
@@ -80,8 +80,8 @@ namespace WebServices.Controllers
             if (categoryEntity == null) return NotFound();
 
             categoryEntity.Name = category.Name;
-            categoryEntity.Description = category.Description;
-            categoryEntity.Image = category.Image;
+            categoryEntity.Notes = category.Notes;
+            categoryEntity.Attachments = category.Attachments;
 
             _repository.Category.UpdateCategory(categoryEntity);
             await _repository.SaveAsync();

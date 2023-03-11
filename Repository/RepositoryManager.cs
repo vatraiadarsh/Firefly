@@ -13,6 +13,7 @@ namespace Repository
 
         private RepositoryContext _context;
         private ICategoryRepository _categoryRepository;
+        private ITagRepository _tagRepository;
 
         public RepositoryManager(RepositoryContext context)
         {
@@ -21,17 +22,25 @@ namespace Repository
 
         public ICategoryRepository Category
         {
-            // repository initialization with db context
             get
             {
                 if (_categoryRepository == null)
                     _categoryRepository = new CategoryRepository(_context);
                 return _categoryRepository;
             }
-
         }
 
-        public void Dispose() => _context.Dispose();
+        public ITagRepository Tag {
+     
+            get
+            {
+                if (_tagRepository == null)
+                    _tagRepository = new TagRepository(_context);
+                return _tagRepository;
+            }
+}
+
+public void Dispose() => _context.Dispose();
 
         public Task SaveAsync() => _context.SaveChangesAsync();
 

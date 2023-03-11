@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Entities.RequestFeatures.Parameters
 {
-    public class CategoryParameters : RequestParameters
+    public class TagParameters : RequestParameters
     {
-        public CategoryParameters()
+        public TagParameters()
         {
             OrderBy = "name";
         }
-        public string SearchTerm { get; set; }
+
+        public string SearchTerm { get;set; }
     }
 }

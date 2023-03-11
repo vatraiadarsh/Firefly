@@ -72,6 +72,8 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddScoped<IValidator<CategoryDto>, CategoryValidator>();
+builder.Services.AddScoped<IValidator<TagDto>, TagValidator>();
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
